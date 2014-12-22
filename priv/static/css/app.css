@@ -38,3 +38,27 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+/* Chess Board Styles
+-------------------------------------------------- */
+
+.black {
+  height: 32px;
+  width: 32px;
+  background-color: #CCC;
+}
+
+.white {
+  height: 46px;
+  width: 46px;
+}
+
+.piece {
+  height: 44px;
+  width: 44px;
+}
+
+table {
+  margin-top: 24px;
+  border: solid 6px;
+}

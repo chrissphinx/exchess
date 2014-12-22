@@ -1,4 +1,12 @@
-<div id="messages" class="container">
+<div class="container">
+  <div class="row">
+    <div id="messages" class="col-sm-6"></div>
+    <div class="col-sm-6">
+      <table>
+        <tbody id="board"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <div id="footer">
   <div class="container">

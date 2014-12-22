@@ -23,6 +23,7 @@ defmodule Chat.RoomChannel do
   end
 
   def event(socket, "new:msg", message) do
+    IO.puts "MSG #{socket.channel}:#{socket.topic}"
     broadcast socket, "new:msg", message
     socket
   end
