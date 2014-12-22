@@ -14,6 +14,9 @@ defmodule Chat.RoomChannel do
   def join(socket, "lobby", message) do
     IO.puts "JOIN #{socket.channel}:#{socket.topic}"
     reply socket, "join", %{status: "connected"}
+    Board.create
+    reply socket, "board:state", Board.show
+    IO.puts "SENT board:state"
     broadcast socket, "user:entered", %{user: message["user"]}
     {:ok, socket}
   end
@@ -24,7 +27,19 @@ defmodule Chat.RoomChannel do
 
   def event(socket, "new:msg", message) do
     IO.puts "MSG #{socket.channel}:#{socket.topic}"
-    broadcast socket, "new:msg", message
+    if Regex.match?(~r/[a-h][1-8]-[a-h][1-8]/, message["body"]) do
+      Board.move message["body"]
+      broadcast socket, "board:state", Board.show
+    else
+      broadcast socket, "new:msg", message
+    end
+    socket
+  end
+
+  def event(socket, "board:move", message) do
+    IO.puts "MOVE #{socket.channel}:#{socket.topic} #{message}"
+    Board.move message
+    broadcast socket, "board:state", Board.show
     socket
   end
 end

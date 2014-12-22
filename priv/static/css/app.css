@@ -43,8 +43,8 @@ code {
 -------------------------------------------------- */
 
 .black {
-  height: 32px;
-  width: 32px;
+  height: 46px;
+  width: 46px;
   background-color: #CCC;
 }
 
@@ -60,5 +60,5 @@ code {
 
 table {
   margin-top: 24px;
-  border: solid 6px;
+  border: solid 4px;
 }
