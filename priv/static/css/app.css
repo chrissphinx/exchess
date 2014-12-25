@@ -42,23 +42,28 @@ code {
 /* Chess Board Styles
 -------------------------------------------------- */
 
-.black {
-  height: 46px;
-  width: 46px;
-  background-color: #CCC;
-}
+ .piece {
+    height: 45px;
+    width: 45px;
+  }
 
-.white {
-  height: 46px;
-  width: 46px;
-}
+  .black {
+    height: 48px;
+    width: 48px;
+    background-color: #CCC;
+  }
 
-.piece {
-  height: 44px;
-  width: 44px;
-}
+  .white {
+    height: 48px;
+    width: 48px;
+  }
 
-table {
-  margin-top: 24px;
-  border: solid 4px;
-}
+  table {
+    margin-top: 24px;
+    border: solid 4px;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }

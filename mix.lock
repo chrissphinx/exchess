@@ -1,5 +1,6 @@
 %{"cowboy": {:hex, :cowboy, "1.0.0"},
   "cowlib": {:hex, :cowlib, "1.0.0"},
+  "jazz": {:hex, :jazz, "0.2.1"},
   "linguist": {:hex, :linguist, "0.1.2"},
   "phoenix": {:hex, :phoenix, "0.4.1"},
   "plug": {:hex, :plug, "0.7.0"},

@@ -1,6 +1,6 @@
 $(function(){
   // SOCKET AND CHANNEL CREATION
-  var socket     = new Phoenix.Socket("ws://" + location.host +  "/ws");
+  Socket     = new Phoenix.Socket("ws://" + location.host +  "/ws");
   var $status    = $("#status");
   var $messages  = $("#messages");
   var $input     = $("#message-input");
@@ -13,7 +13,7 @@ $(function(){
     return("<p><a href='#'>[" + username + "]</a>&nbsp; " + body +"</p>");
   }
 
-  socket.join("rooms", "lobby", {}, function(chan){
+  Socket.join("rooms", "lobby", {}, function(chan){
 
     $input.off("keypress").on("keypress", function(e) {
       if (e.keyCode == 13) {
@@ -37,8 +37,8 @@ $(function(){
       $messages.append("<br/><i>[" + username + " entered]</i>");
     });
 
-    chan.on("board:state", function(board) {
-      View.setState({board: board});
+    chan.on("board:state", function(state) {
+      View.setState({board: state.board});
     });
   });
 });
