@@ -15,6 +15,6 @@ This is [sometimes working](http://sx.qc.to)
 ## To Do
 - [ ] Multiple Rooms
 - [ ] Move Validation
-- [ ] Render Using React.js
+- [X] Render Using React.js
 - [ ] Interface Work
 
