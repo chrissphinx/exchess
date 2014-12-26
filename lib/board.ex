@@ -13,32 +13,26 @@ defmodule Board do
   
   def create() do
     Agent.start_link(fn ->
-      {@board, []}
+      {Enum.into(@board, %HashDict{}), []}
     end, name: __MODULE__)
   end
 
   def move(m) do
-    Agent.update(__MODULE__, fn {board, moves} ->
-      <<from_square::16, "-", to_square::16>> = m
-      from_square = String.to_atom <<from_square::16>>
-      to_square = String.to_atom <<to_square::16>>
-      {_, piece} = List.keyfind(board, from_square, 0)
+    Agent.update(__MODULE__, fn {board, _} ->
+      <<piece, from::16, "-", to::16>> = m
 
-      new_board =
-        List.keyreplace(board, to_square, 0, {to_square, piece})
-        |> List.keyreplace(from_square, 0, {from_square, "_"})
+      change = [
+        {String.to_atom(<<from::16>>), "_"},
+        {String.to_atom(<<to::16>>), <<piece>>}
+      ] |> Enum.into %HashDict{}
 
-      {new_board, [m|moves]}
+      {Dict.merge(board, change), []}
     end)
   end
 
   def show() do
     Agent.get(__MODULE__, fn {board, _} ->
-      %{board: 
-          board
-          |> Enum.scan([], fn(e, _) -> %Tile{id: elem(e, 0), piece: elem(e, 1)} end)
-          |> Enum.chunk(8)
-        }
+      board
     end)
   end
 

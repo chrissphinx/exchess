@@ -43,7 +43,7 @@ $(function(){
 
   FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-  var Piece = React.createClass({displayName: "Piece",
+  var Piece = React.createClass({
     dragStart: function(e) {
       var e = e.nativeEvent;
       e.dataTransfer.setData("from", e.target.parentNode.id);
@@ -53,29 +53,29 @@ $(function(){
       if (this.props.data !== "_") {
         switch (this.props.data) {
           case "K":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "K", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="K" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg" />
           case "k":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "k", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="k" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg" />
           case "Q":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "Q", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="Q" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg" />
           case "q":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "q", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="q" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg" />
           case "R":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "R", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="R" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg" />
           case "r":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "r", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="r" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg" />
           case "B":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "B", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="B" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg" />
           case "b":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "b", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="b" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg" />
           case "N":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "N", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="N" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg" />
           case "n":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "n", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="n" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg" />
           case "P":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "P", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="P" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg" />
           case "p":
-            return React.createElement("img", {onDragStart: this.dragStart, draggable: "true", id: "p", className: "piece", src: "http://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg"})
+            return <img onDragStart={this.dragStart} draggable="true" id="p" className="piece" src="http://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg" />
         }
       } else {
         return false;
@@ -83,7 +83,7 @@ $(function(){
     }
   });
 
-  var Square = React.createClass({displayName: "Square",
+  var Square = React.createClass({
     drop: function(e) {
       e.preventDefault();
       var e = e.nativeEvent;
@@ -98,22 +98,22 @@ $(function(){
     },
     render: function() {
       var offset = this.props.offset;
-      return React.createElement("td", {onDrop: this.drop, onDragOver: this.dragOver, id: this.props.tile, className: this.props.color}, React.createElement(Piece, {data: this.props.data}))
+      return <td onDrop={this.drop} onDragOver={this.dragOver} id={this.props.tile} className={this.props.color}><Piece data={this.props.data} /></td>
     }
   });
 
-  var Row = React.createClass({displayName: "Row",
+  var Row = React.createClass({
     render: function() {
       var row = [];
       for(var i = 0; i < 8; i++) {
         var file = FILES[i];
         var tile = file + this.props.rank;
-        row.push(React.createElement(Square, {data: this.props.data[tile], tile: tile, color: (i+this.props.offset) % 2 == 0 ? 'black' : 'white', key: file}));
-      } return React.createElement("tr", null, row)
+        row.push(<Square data={this.props.data[tile]} tile={tile} color={(i+this.props.offset) % 2 == 0 ? 'black' : 'white'} key={file} />);
+      } return <tr>{row}</tr>
     }
   });
 
-  var Board = React.createClass({displayName: "Board",
+  var Board = React.createClass({
     getInitialState: function() {
       return {board: {
         a8: "r", b8: "n", c8: "b", d8: "q", e8: "k", f8: "b", g8: "n", h8: "r",
@@ -129,10 +129,10 @@ $(function(){
     render: function() {
       var board = [];
       for(var i = 0; i < 8; i++) {
-        board.push(React.createElement(Row, {data: this.state.board, rank: 8 - i, offset: i % 2 == 0 ? 0 : 1, key: i}));
-      } return React.createElement("tbody", null, board)
+        board.push(<Row data={this.state.board} rank={8 - i} offset={i % 2 == 0 ? 0 : 1} key={i} />);
+      } return <tbody>{board}</tbody>
     }
   });
 
-  var View = React.render(React.createElement(Board, null), document.getElementById("board"));
+  var View = React.render(<Board />, document.getElementById("board"));
 });
