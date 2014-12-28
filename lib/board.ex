@@ -17,17 +17,76 @@ defmodule Board do
     end, name: __MODULE__)
   end
 
-  def move(m) do
+  def move(move) do
     Agent.update(__MODULE__, fn {board, _} ->
-      <<piece, from::16, "-", to::16>> = m
+      case is_valid? board, move do
+        {:ok, {piece, from, to}} ->
+          change = [
+            {from, "_"},
+            {to, <<piece>>}
+          ] |> Enum.into %HashDict{}
 
-      change = [
-        {String.to_atom(<<from::16>>), "_"},
-        {String.to_atom(<<to::16>>), <<piece>>}
-      ] |> Enum.into %HashDict{}
-
-      {Dict.merge(board, change), []}
+          {Dict.merge(board, change), []}
+        {:error, _} ->
+          {board, []}
+      end
     end)
+  end
+
+  defp is_valid?(board, move) do
+    <<piece, from_file, from_rank, to_file, to_rank>> = move
+    from = String.to_atom <<from_file>> <> <<from_rank>>
+    to   = String.to_atom <<to_file>> <> <<to_rank>>
+
+    x1   = (from_file - 96)
+    x2   = (to_file - 96)
+    dx   = x2 - x1
+    y1   = (from_rank - 48)
+    y2   = (to_rank - 48)
+    dy   = y2 - y1
+
+    color = if piece > 65 and piece < 90, do: :white, else: :black
+    <<occupant>> = Dict.fetch! board, to
+    occupant =
+      cond do
+        occupant == 95 ->
+          false
+        occupant > 65 and occupant < 90 ->
+          :white
+        true ->
+          :black
+      end
+
+    cond do
+      ?K == piece or ?k == piece ->
+        returning =
+          if abs(dx) <= 1 and abs(dy) <= 1, do: :ok, else: :error
+      ?Q == piece or ?q == piece ->
+        returning =
+          if dx == 0 or dy == 0 or abs(dx) == abs(dy), do: :ok, else: :error
+      ?R == piece or ?r == piece ->
+        returning =
+          if dx == 0 or dy == 0, do: :ok, else: :error
+      ?B == piece or ?b == piece ->
+        returning =
+          if abs(dx) == abs(dy), do: :ok, else: :error
+      ?N == piece or ?n == piece ->
+        returning =
+          if abs(dx) >= 1 and abs(dy) >= 1
+          and abs(dx) + abs(dy) == 3, do: :ok, else: :error
+      ?P == piece ->
+        returning =
+          if abs(dx) <= 1 and dy == 1
+          or y1 == 2 and dy == 2, do: :ok, else: :error
+      ?p == piece ->
+        returning =
+          if abs(dx) <= 1 and dy == -1
+          or y1 == 7 and dy == -2, do: :ok, else: :error
+    end
+
+    returning = if occupant == color, do: :error, else: returning
+
+    {returning, {piece, from, to}}
   end
 
   def show() do

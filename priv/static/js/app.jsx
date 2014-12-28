@@ -98,7 +98,7 @@ $(function(){
       if (e.target.className == "piece") {
         to = e.target.parentNode.id;
       } else to = e.target.id;
-      Socket.channels[0].send("board:move", e.dataTransfer.getData("piece") + e.dataTransfer.getData("from") + "-" + to);
+      Socket.channels[0].send("board:move", e.dataTransfer.getData("piece") + e.dataTransfer.getData("from") + to);
     },
     dragOver: function(e) {
       e.preventDefault();
