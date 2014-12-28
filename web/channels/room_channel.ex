@@ -27,8 +27,8 @@ defmodule Chat.RoomChannel do
 
   def event(socket, "new:msg", message) do
     IO.puts "MSG #{socket.channel}:#{socket.topic}"
-    if Regex.match?(~r/[a-h][1-8][a-h][1-8]/, message["body"]) do
-      Board.move message["body"]
+    if Regex.match?(~r/@reset/, message["body"]) do
+      Board.reset
       broadcast socket, "board:state", Board.show
     else
       broadcast socket, "new:msg", message

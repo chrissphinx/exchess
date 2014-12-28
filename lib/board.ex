@@ -17,6 +17,12 @@ defmodule Board do
     end, name: __MODULE__)
   end
 
+  def reset() do
+    Agent.update(__MODULE__, fn {board, _} ->
+      {Enum.into(@board, %HashDict{}), []}
+    end)
+  end
+
   def move(move) do
     Agent.update(__MODULE__, fn {board, _} ->
       case is_valid? board, move do
