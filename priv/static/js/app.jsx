@@ -1,9 +1,17 @@
 $(function(){
+
   Socket     = new Phoenix.Socket("ws://" + location.host +  "/ws");
   var $status    = $("#status");
   var $messages  = $("#messages");
   var $input     = $("#message-input");
   var $username  = $("#username");
+  var $body      = $("body");
+
+  $(window).resize(function() {
+    $messages.height(($body.height() - 120) + "px");
+    $messages.scrollTop($messages[0].scrollHeight);
+  }).resize();
+
   var sanitize   = function(html){ return $("<div/>").text(html).html(); }
 
   var messageTemplate = function(message){
@@ -27,8 +35,7 @@ $(function(){
 
     chan.on("new:msg", function(message){
       $messages.append(messageTemplate(message));
-      console.log(message);
-      scrollTo(0, document.body.scrollHeight);
+      $messages.scrollTop($messages[0].scrollHeight);
     });
 
     chan.on("user:entered", function(msg){

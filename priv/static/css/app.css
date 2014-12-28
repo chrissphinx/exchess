@@ -4,13 +4,21 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
+body, html {
+  /*margin: 0;*/
+  overflow: hidden;
+  height: 100%;
+}
+
 #footer {
   position: fixed;
-  bottom: 34px;
+  bottom: 0px;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
@@ -42,28 +50,33 @@ code {
 /* Chess Board Styles
 -------------------------------------------------- */
 
- .piece {
-    height: 45px;
-    width: 45px;
-  }
+.piece {
+  height: 45px;
+  width: 45px;
+}
 
-  .black {
-    height: 48px;
-    width: 48px;
-    background-color: #CCC;
-  }
+.black {
+  height: 48px;
+  width: 48px;
+  background-color: #CCC;
+}
 
-  .white {
-    height: 48px;
-    width: 48px;
-  }
+.white {
+  height: 48px;
+  width: 48px;
+}
 
-  table {
-    margin-top: 24px;
-    border: solid 4px;
-  }
+table {
+  margin-top: 24px;
+  border: solid 4px;
+}
 
-  img {
-    display: block;
-    margin: 0 auto;
-  }
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+#messages {
+  overflow-y: scroll;
+  height: 0;
+}

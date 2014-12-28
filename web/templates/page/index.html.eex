@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div id="messages" class="col-sm-6"></div>
-    <div class="col-sm-6">
+    <div id="game" class="col-sm-6">
       <table>
         <tbody id="board"></tbody>
       </table>
