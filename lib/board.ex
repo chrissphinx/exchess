@@ -207,6 +207,8 @@ defmodule Board do
                 {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
               end)
             |> elem 1), do: :ok, else: :error
+          true ->
+            :ok
         end
     end
 
