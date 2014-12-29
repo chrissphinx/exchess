@@ -18,7 +18,7 @@ defmodule Board do
   end
 
   def reset() do
-    Agent.update(__MODULE__, fn {board, _} ->
+    Agent.update(__MODULE__, fn {_, _} ->
       {Enum.into(@board, %HashDict{}), []}
     end)
   end
@@ -55,9 +55,9 @@ defmodule Board do
     <<occupant>> = Dict.fetch! board, to
     occupant =
       cond do
-        occupant == 95 ->
+        occupant == ?_ ->
           false
-        occupant > 65 and occupant < 90 ->
+        occupant >= ?B and occupant <= ?R ->
           :white
         true ->
           :black
@@ -88,6 +88,126 @@ defmodule Board do
         returning =
           if abs(dx) <= 1 and dy == -1
           or y1 == 7 and dy == -2, do: :ok, else: :error
+    end
+
+    if returning == :ok do
+      returning = 
+        cond do
+          piece == ?N or piece == ?n ->
+            :ok
+          dx == 0 and dy > 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f>> <> <<r+1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx > 0 and dy > 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f+1>> <> <<r+1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx > 0 and dy == 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f+1>> <> <<r>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx > 0 and dy < 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f+1>> <> <<r-1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx == 0 and dy < 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f>> <> <<r-1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx < 0 and dy < 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f-1>> <> <<r-1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx < 0 and dy == 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f-1>> <> <<r>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+          dx < 0 and dy > 0 ->
+            if (Stream.unfold(
+              <<from_file, from_rank>>,
+              fn <<f, r>> when f == to_file and r == to_rank -> nil;
+                <<f, r>> -> {<<f, r>>, <<f-1>> <> <<r+1>>}
+              end)
+            |> Enum.to_list
+            |> tl
+            |> Enum.map_reduce(
+              true,
+              fn(e, acc) ->
+                {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
+              end)
+            |> elem 1), do: :ok, else: :error
+        end
     end
 
     returning = if occupant == color, do: :error, else: returning
