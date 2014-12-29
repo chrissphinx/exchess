@@ -14,7 +14,7 @@ This is [sometimes working](http://ex.qc.to)
 
 ## To Do
 - [ ] Multiple Matches with One Lobby
-- [-] Move Validation
+- [X] Move Validation
   - [ ] Castling Rights
   - [ ] In Check
   - [ ] Pawn Promotion
