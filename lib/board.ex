@@ -82,12 +82,14 @@ defmodule Board do
           and abs(dx) + abs(dy) == 3, do: :ok, else: :error
       ?P == piece ->
         returning =
-          if abs(dx) <= 1 and dy == 1
-          or y1 == 2 and dy == 2, do: :ok, else: :error
+          if dx == 0 and dy == 1 and !occupant
+          or abs(dx) == 1 and dy == 1 and occupant == :black
+          or y1 == 2 and dy == 2 and !occupant, do: :ok, else: :error
       ?p == piece ->
         returning =
-          if abs(dx) <= 1 and dy == -1
-          or y1 == 7 and dy == -2, do: :ok, else: :error
+          if dx == 0 and dy == -1 and !occupant
+          or abs(dx) == 1 and dy == -1 and occupant == :white
+          or y1 == 7 and dy == -2 and !occupant, do: :ok, else: :error
     end
 
     if returning == :ok do
