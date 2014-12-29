@@ -84,12 +84,12 @@ defmodule Board do
         returning =
           if dx == 0 and dy == 1 and !occupant
           or abs(dx) == 1 and dy == 1 and occupant == :black
-          or y1 == 2 and dy == 2 and !occupant, do: :ok, else: :error
+          or dx == 0 and y1 == 2 and dy == 2 and !occupant, do: :ok, else: :error
       ?p == piece ->
         returning =
           if dx == 0 and dy == -1 and !occupant
           or abs(dx) == 1 and dy == -1 and occupant == :white
-          or y1 == 7 and dy == -2 and !occupant, do: :ok, else: :error
+          or dx == 0 and y1 == 7 and dy == -2 and !occupant, do: :ok, else: :error
     end
 
     if returning == :ok do
