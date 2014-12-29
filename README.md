@@ -9,13 +9,18 @@ To start the application you have to:
 Now you can visit `localhost:4000` from your browser.
 
 ## Live Demo
-This is [sometimes working](http://sx.qc.to)
+This is [sometimes working](http://ex.qc.to)
 
 
 ## To Do
-- [ ] Multiple Rooms
-- [ ] Move Validation
+- [ ] Multiple Matches with One Lobby
+- [-] Move Validation
+  - [ ] Castling Rights
+  - [ ] In Check
+  - [ ] Pawn Promotion
+- [ ] Track Turns & Moves
 - [X] Render Using React.js
-- [ ] Optimize Back-end or Lie in the UI
+  - [ ] No Draggable on Opponents Turn
+- [X] Optimize Back-end
 - [ ] Interface Work
 
