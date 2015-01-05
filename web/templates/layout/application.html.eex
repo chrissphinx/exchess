@@ -32,13 +32,7 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav pull-right">
             <li><a href="#" id="status"></a></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li><a href="https://github.com/chrissphinx/chesschat">source</a></li>
-            <!-- <li><a href=""></a></li> -->
+            <li><a href="https://github.com/chrissphinx/exchess">source</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
