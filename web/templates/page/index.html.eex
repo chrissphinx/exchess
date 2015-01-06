@@ -2,9 +2,31 @@
   <div class="row">
     <div id="messages" class="col-sm-6"></div>
     <div id="game" class="col-sm-6">
-      <table>
-        <tbody id="board"></tbody>
-      </table>
+      <div class="row">
+        <div class="btn-group">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-list"></span> Matches
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">vs. User</a></li>
+              <li><a href="#">vs. Bob</a></li>
+              <li><a href="#">vs. Alice</a></li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-adjust"></span> Offer Draw
+          </button>
+          <button type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-remove-circle"></span> Resign
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <table>
+          <tbody id="board"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
