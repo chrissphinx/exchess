@@ -7,10 +7,6 @@ defmodule Chat.Router do
     plug :fetch_session
   end
 
-  pipeline :api do
-    plug :accepts, ~w(json)
-  end
-
   scope "/", Chat do
     pipe_through :browser
 

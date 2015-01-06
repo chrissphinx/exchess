@@ -41,6 +41,7 @@ $(function(){
     chan.on("user:entered", function(msg){
       var username = sanitize(msg.user || "anonymous");
       $messages.append("<br/><i>[" + username + " entered]</i>");
+      $messages.scrollTop($messages[0].scrollHeight);
     });
 
     chan.on("board:state", function(state) {
