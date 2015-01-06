@@ -42,7 +42,7 @@ defmodule Board do
   """
   def move(move) do
     Agent.update(__MODULE__, fn {board, _} ->
-      case is_valid? board, move do
+      case is_legal? board, move do
         {:ok, {piece, from, to}} ->
           change = [
             {from, "_"},
@@ -56,7 +56,7 @@ defmodule Board do
     end)
   end
 
-  defp is_valid?(board, move) do
+  defp is_legal?(board, move) do
     {:ok, {board, move}} |> color? |> valid? |> blockers?
   end
 
@@ -78,7 +78,7 @@ defmodule Board do
     case occupant do
       ^color -> {:error, {}}
       _      -> {:ok,    {board, piece, occupant, from, to}}
-    end
+    end # -> valid?
   end
 
   defp valid?({:ok, {board, piece, occupant, from, to}}) do
@@ -89,7 +89,7 @@ defmodule Board do
     dx = (to_file - 96) - (from_file - 96)
     dy = (to_rank - 48) - y1
 
-    returning = 
+    { # return {:ok/:error, {}}
       cond do
         # KING
         ?K == piece or ?k == piece ->
@@ -117,9 +117,9 @@ defmodule Board do
           if dx == 0 and dy == -1 and !occupant
           or abs(dx) == 1 and dy == -1 and occupant == :white
           or dx == 0 and y1 == 7 and dy == -2 and !occupant, do: :ok, else: :error
-      end
-
-    {returning, {board, piece, from, to, dx, dy, from_file, to_file, from_rank, to_rank}}
+      end,
+      {board, piece, from, to, dx, dy, from_file, to_file, from_rank, to_rank}
+    } # -> blockers?
   end
 
   defp valid?({:error, _}) do
@@ -130,7 +130,7 @@ defmodule Board do
     x = sign dx
     y = sign dy
 
-    returning = 
+    { # return {:ok/:error, {}}
       cond do
         piece == ?N or piece == ?n ->
           :ok
@@ -148,9 +148,9 @@ defmodule Board do
               {e, acc and Dict.fetch!(board, String.to_atom(e)) == "_"}
             end)
           |> elem 1), do: :ok, else: :error
-      end
-
-    {returning, {piece, String.to_atom(<<from :: 16>>), String.to_atom(<<to :: 16>>)}}
+      end,
+      {piece, String.to_atom(<<from :: 16>>), String.to_atom(<<to :: 16>>)}
+    } # -> check?
   end
 
   defp blockers?({:error, _}) do
